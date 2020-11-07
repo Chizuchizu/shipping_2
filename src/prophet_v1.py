@@ -91,7 +91,7 @@ def build_model(pars):
                 # yearly_seasonality=False,
                 # seasonality_prior_scale=s_prior,
                 # holidays_prior_scale=h_prior,
-                # changepoint_prior_scale=c_prior
+                # changepoint_prior_scale=2.5
                 )
 
     m = m.add_seasonality(
@@ -125,4 +125,4 @@ for pars in params:
 
 print(best_score, best_params)
 forecast[forecast < 0] = 0
-forecast.to_csv(f"../outputs/{round(best_score, 5)}_prophet_non_year.csv", index=False, header=False)
+# forecast.to_csv(f"../outputs/{round(best_score, 5)}_prophet_non_year.csv", index=False, header=False)

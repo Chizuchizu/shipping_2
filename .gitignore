@@ -1,0 +1,12 @@
+/data/
+.idea/.gitignore
+.idea/inspectionProfiles/
+.idea/misc.xml
+.idea/modules.xml
+.idea/shipping_2.iml
+.idea/vcs.xml
+.ipynb_checkpoints/
+main.py
+notebooks/
+outputs/
+src/__pycache__/

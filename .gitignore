@@ -10,3 +10,7 @@ main.py
 notebooks/
 outputs/
 src/__pycache__/
+/src/mlruns/
+models/
+src/fig1.png
+src/fig2.png

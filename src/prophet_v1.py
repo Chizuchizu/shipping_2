@@ -73,6 +73,10 @@ def run_model():
             pred = forecast[["ds", "yhat"]]
             # if x == "SC2":
             pred = pred.iloc[-61:, :]
+
+            # if x == "SC1":
+            #     pred["yhat"] = pred["yhat"].round()
+
             # else:
             #     pred = pred.iloc[]
             pred["company"] = x
@@ -153,9 +157,9 @@ score, forecast = run_model()
 
 print(score)
 forecast[forecast < 0] = 0
-forecast.to_csv(f"../outputs/{round(best_score, 5)}_prophet_non_year.csv", index=False, header=False)
+forecast.to_csv(f"../outputs/{round(best_score, 5)}_{rand}_prophet.csv", index=False, header=False)
 
 mlflow.set_experiment("all")
 with mlflow.start_run(run_name=f"{rand}"):
     mlflow.log_param("score", score)
-    mlflow.log_artifact(f"../outputs/{round(best_score, 5)}_prophet_non_year.csv")
+    mlflow.log_artifact(f"../outputs/{round(best_score, 5)}_{rand}_prophet.csv")

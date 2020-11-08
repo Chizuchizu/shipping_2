@@ -1,0 +1,15 @@
+artifact_uri: file:///home/yuma/PycharmProjects/shipping_2/src/mlruns/3/23d587de5012408181a313a04f3e9859/artifacts
+end_time: 1604837191135
+entry_point_name: ''
+experiment_id: '3'
+lifecycle_stage: active
+name: ''
+run_id: 23d587de5012408181a313a04f3e9859
+run_uuid: 23d587de5012408181a313a04f3e9859
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1604837188986
+status: 3
+tags: []
+user_id: yuma

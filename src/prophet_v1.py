@@ -84,6 +84,13 @@ debug = True
 rand = np.random.randint(0, 1000000)
 experiment_name = f"debug_{rand}" if debug else f"{rand}"
 """
+イギリスのロックダウン
+https://www.bloomberg.co.jp/news/articles/2020-03-23/Q7NYY4T0AFB401
+https://www.bbc.com/japanese/features-and-analysis-52612672
+2020-03-23 〜　2020-05-11
+
+
+
     def __init__(
             self,
             growth='linear',
@@ -104,10 +111,12 @@ experiment_name = f"debug_{rand}" if debug else f"{rand}"
             stan_backend=None
     ):
     multiplicative
-負の数をなくすためにポアソンなんたらかんたらをつかう
+
 https://github.com/facebook/prophet/issues/1668
 """
-
+lockdown_holidays = pd.DataFrame()
+lockdown_holidays["ds"] = pd.date_range("2020-03-24", "2020-05-13", freq="D")
+lockdown_holidays["holiday"] = "covid-19"
 params = {
     "growth": "logistic",
     "changepoint_prior_scale": 0.05,
@@ -115,12 +124,18 @@ params = {
     "mcmc_samples": 0,
     "seasonality_mode": "multiplicative",
     "daily_seasonality": True,
-    "weekly_seasonality": True
+    "weekly_seasonality": True,
+    # "changepoints": ["2020-03-23", "2020-05-11"],
+    "holidays": lockdown_holidays
     # "prophet_pos": multiplicative
     # "likelihood": "NegBinomial"
 }
 
 prophet_pos = False
+
+
+def is_lockdown(ds):
+    return (pd.to_datetime("2020-03-23") < pd.to_datetime(ds)) or (pd.to_datetime(ds) < pd.to_datetime("2020-05-12"))
 
 
 def run_model():
@@ -144,10 +159,21 @@ def run_model():
         # with mlflow.start_run(run_name=f"{x}"):
         with mlflow.start_run(run_name=f"{rand}"):
             model = build_model()
+
+            # model.add_seasonality(name="lockdown", period=7, fourier_order=3, condition_name="lockdown")
+            # model.add_seasonality(name="normal", period=7, fourier_order=3, condition_name="normal")
+            #
+            # use_data["lockdown"] = use_data["ds"].apply(is_lockdown)
+            # use_data["normal"] = ~use_data["ds"].apply(is_lockdown)
+
             if params["growth"] == "logistic":
                 use_data["cap"] = use_data["y"].max() * 1.2
             model.fit(use_data)
             future = model.make_future_dataframe(periods=periods)
+
+            # future["lockdown"] = future["ds"].apply(is_lockdown)
+            # future["normal"] = ~future["ds"].apply(is_lockdown)
+
             if params["growth"] == "logistic":
                 future["cap"] = use_data["y"].max() * 1.2
 
@@ -206,6 +232,7 @@ def build_model():
     # year_list = [2019, 2020]
     # holidays = make_holidays_df(year_list=year_list, country='IN')
     # wseas, mseas, yseas, s_prior, h_prior, c_prior = pars
+
     if prophet_pos:
         m = ProphetPos(**params)
     else:
@@ -221,10 +248,10 @@ def build_model():
         period=30.5,
         fourier_order=25)
 
-        # m = m.add_seasonality(
-        #     name='yearly',
-        #     period=365.25,
-        #     fourier_order=yseas)
+    # m = m.add_seasonality(
+    #     name='yearly',
+    #     period=365.25,
+    #     fourier_order=yseas)
 
     return m
 

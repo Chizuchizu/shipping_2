@@ -32,6 +32,10 @@ I did the modeling based on prophet.
 
 We made a "logistic" prediction because the corona can cause the trend to be negative. See the parameters for details.
 
+The discussion I referred to ↓
+https://github.com/facebook/prophet/issues/1668
+
+
 ```
 params = {
     "growth": "logistic",

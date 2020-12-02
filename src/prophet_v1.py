@@ -120,13 +120,13 @@ lockdown_holidays["holiday"] = "covid-19"
 params = {
     "growth": "logistic",
     "changepoint_prior_scale": 0.05,
-    "seasonality_prior_scale": 10,
+    "seasonality_prior_scale": 30,
     "mcmc_samples": 0,
     "seasonality_mode": "multiplicative",
-    "daily_seasonality": True,
-    "weekly_seasonality": True,
+    # "daily_seasonality": True,
+    #  "weekly_seasonality": True,
     # "changepoints": ["2020-03-23", "2020-05-11"],
-    "holidays": lockdown_holidays
+    # "holidays": lockdown_holidays
     # "prophet_pos": multiplicative
     # "likelihood": "NegBinomial"
 }
@@ -229,8 +229,8 @@ def run_model():
 
 
 def build_model():
-    # year_list = [2019, 2020]
-    # holidays = make_holidays_df(year_list=year_list, country='IN')
+    year_list = [2019, 2020]
+    holidays = make_holidays_df(year_list=year_list, country='IN')
     # wseas, mseas, yseas, s_prior, h_prior, c_prior = pars
 
     if prophet_pos:

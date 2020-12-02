@@ -25,6 +25,8 @@ python src/prophet_v1.py
 
 ### Features
 
+Since there is no data for days when there was no trade, I have added such data that such days would also be zero. (Adding it increased the score compared to not adding it.)
+
 I didn't do features engineering just to prepare the data.
 
 ### Modeling

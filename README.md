@@ -1,4 +1,4 @@
-# Shipping Optimization Chalenge my solution
+# Shipping Optimization Challenge my solution
 
 ## how to run
 
